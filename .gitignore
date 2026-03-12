@@ -1,0 +1,21 @@
+# Python ignore
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+
+# PHP/Web ignore
+.htaccess
+config.php
+user_secrets.php
+*.log
+
+# Database/SQL ignore
+*.sqlite
+*.db
+
+# Operating System files
+.DS_Store
+Thumbs.db
