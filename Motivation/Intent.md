@@ -1,26 +1,26 @@
 # Unified Health Record (HRec) - Project Intent
 
 ## 1. Project Overview
-The **Unified Health Record (HRec)** system is a smart healthcare management solution designed to bridge the gap between patients (Users), General Practitioners (GPs), and Pharmacies (Pharma). The core objective is to move beyond simple record-keeping and toward active medical safety and supply-chain efficiency.
+The **Unified Health Record (HRec)** system is a smart healthcare management solution designed to bridge the gap between Patients (Users), General Practitioners (GPs), Specialists (SPs), and Pharmacies (Pharma).
 
 ## 2. Core Features & Logic
-* **Smart Health Records:** Users input medication history, diagnosis reports, and stock. The system generates "System Remarks" to flag potential black-box warnings or medicine conflicts.
-* **Anonymized GP Interaction:** Doctors (GPs) monitor patient records periodically without compromising identity. They manage referrals to Specialists (SP).
-* **Intelligent Pharmacy Management:** Pharmacies track generic-based stock and receive automated alerts for shortages based on real-time user demand.
-* **Medication Efficacy Rating:** A unique rating system (Efficacy vs. Price vs. Popularity). If a high-rated medicine is out of stock, the system queries the GP before suggesting a lower-rated alternative.
-* **Financial Tracking:** Generation of digital sales receipts and automated revenue calculation for pharmacies (deducting **5% Logistics** and **5% VAT**).
-
-## 3. Technical Stack
-* **Backend:** MySQL (10–12 complex queries).
-* **Frontend:** PHP/HTML/CSS.
-* **Data Acquisition:** Python Scraper (BeautifulSoup) for `medex.com.bd`.
-* **UI/UX Inspiration:** `arogga.com` and `shasthosheba.com`.
+* **Smart Health Records:** Users input medication history and stock. The system generates "System Remarks" for black-box warnings or medicine conflicts.
+* **Gatekeeper GP Interaction:** Doctors (GPs) monitor anonymized patient records for routine anomalies.
+* **Specialist Referral (SP):** The GP refers users to an SP if a specific condition is suspected. The SP is defined by a unique `Specialization_ID`.
+* **Intelligent Pharmacy Management:** Pharmacies track generic-based stock and receive automated alerts for shortages.
+* **Financial Tracking:** * Generate sales receipts and monthly expense logs for Users.
+    * Calculate Pharma Revenue: **Net = Gross - (5% Logistics + 5% VAT)**.
 
 ## 🛠️ Lab ER Outline
 | Entity | Primary Attributes | Relationship |
 | :--- | :--- | :--- |
-| **User** | UserID, Name, Expense_Log | Owns Health Records & Stock |
-| **Doctor (GP)** | DoctorID, Specialization | Monitors Health Records |
-| **Health_Record** | RecordID, Symptoms, Remarks | Linked to User; Reviewed by GP |
-| **Medication** | GenericName, Efficacy, Price | Collected via Scraper |
-| **Pharma** | PharmaID, Stock, Revenue | Receives alerts on Demand |
+| **User** | UserID, Name, Expense_Log | Owns Records & Stock |
+| **GP (Doctor)** | DoctorID, License_No | Monitors records; Issues referrals |
+| **SP (Specialist)**| DoctorID, **Specialization_ID** | Receives referrals from GP |
+| **Health_Record** | RecordID, Symptoms, Remarks | Reviewed by GP for anomalies |
+| **Pharma** | PharmaID, Stock, Revenue | Manages inventory & financial math |
+
+## 🧪 Simulation Scope
+* **Data Source:** Crawled via Python+BS4 from `medex.com.bd`.
+* **Sample Size:** 10–12 generic medications across variety types.
+* **Tech Stack:** MySQL DB , PHP for interface.
