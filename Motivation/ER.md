@@ -1,3 +1,4 @@
+```mermaid
 erDiagram
     %% Core Record Logic
     USER ||--o{ HEALTH_RECORD : "creates & owns"
@@ -16,3 +17,4 @@ erDiagram
     %% User Medication Log Bridge
     USER ||--o{ USER_MED_LOG : "logs usage"
     MEDICATION ||--o{ USER_MED_LOG : "is tracked in"
+```
