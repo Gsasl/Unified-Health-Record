@@ -1,7 +1,25 @@
 # HRec - Entity Relationship Diagram
 
 This diagram maps out the flow between our Users, Doctors (GPs & SPs), and Pharmacies. 
+# HRec - Physical Relational Schema
 
+While an ER diagram shows the logic, a Relational Schema (Physical Data Model) shows the structure—exactly how the tables, primary keys, and foreign keys will look in the MySQL database. 
+
+In the table below, **Bold** indicates a Primary Key (PK), and *Italics* indicates a Foreign Key (FK).
+
+| Table | Attributes |
+| :--- | :--- |
+| **Users** | **UserID**, Username, Email, DOB |
+| **Health_Records** | **RecordID**, *UserID (Unique)*, BloodType, ChronicConditions, Allergies |
+| **GP_Doctors** | **DoctorID**, Name, LicenseNumber |
+| **SP_Specialists** | **SpecID**, Name, Specialization |
+| **Referrals** | **ReferralID**, *UserID*, *IssuingDoctorID*, *ReceivingSpecID*, DateIssued, Reason |
+| **Pharmacies** | **PharmaID**, StoreName, Location |
+| **Medications** | **MedID**, MedName, BasePrice |
+| **Inventory** | **InventoryID**, *PharmaID*, *MedID*, StockQuantity, RetailPrice |
+| **User_Med_Logs** | **LogID**, *UserID*, *MedID*, Dosage, LogDate |
+
+---
 ```mermaid
 erDiagram
     USER ||--o{ HEALTH_RECORD : "inputs & owns"
