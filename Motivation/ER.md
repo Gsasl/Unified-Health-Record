@@ -1,6 +1,4 @@
-# HRec - Conceptual ER Diagram
 
-This diagram represents the core entities and their relationships within the Unified Health Record system.
 
 
 
