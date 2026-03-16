@@ -2,29 +2,31 @@
 
 This diagram represents the core entities and their relationships within the Unified Health Record system.
 
-![Crow's Foot ER Diagram](Crows_ER.drawio)
-```mermaid
-erDiagram
-    %% Core Medical Records
-    GP ||--o{ HEALTH_RECORD : "monitors"
-    SP ||--o{ HEALTH_RECORD : "reviews"
-    USER ||--o{ HEALTH_RECORD : "owns"
-    
-    %% Referrals
-    GP ||--o{ REFERRAL : "issues"
-    SP ||--o{ REFERRAL : "receives"
-    USER ||--o{ REFERRAL : "subject of"
 
-    %% User Medications
-    USER ||--o{ USER_MED_LOG : "logs"
-    MEDICATION ||--o{ USER_MED_LOG : "tracked in"
-
-    %% Pharmacy Inventory
-    PHARMACY ||--o{ INVENTORY : "manages"
-    MEDICATION ||--o{ INVENTORY : "listed in"
-```
 
 ---
+# HRec - Conceptual ER Diagram
+
+This diagram represents the core entities and their relationships within the Unified Health Record system.
+
+| Table | Attributes |
+| :--- | :--- |
+| **Users** | **UserID**, Username, Email, DOB |
+| **Health_Records** | **RecordID**, *UserID (Unique)*, BloodType, ChronicConditions, Allergies |
+| **GP_Doctors** | **DoctorID**, Name, LicenseNumber |
+| **SP_Specialists** | **SpecID**, Name, Specialization |
+| **Referrals** | **ReferralID**, *UserID*, *IssuingDoctorID*, *ReceivingSpecID*, DateIssued, Reason |
+| **Pharmacies** | **PharmaID**, StoreName, Location |
+| **Medications** | **MedID**, MedName, BasePrice |
+| **Inventory** | **InventoryID**, *PharmaID*, *MedID*, StockQuantity, RetailPrice |
+| **User_Med_Logs** | **LogID**, *UserID*, *MedID*, Dosage, LogDate |
+
+---
+
+![Crow's Foot ER Diagram](Crows_ER.png)
+
+---
+
 
 ## 📖 ER Diagram Legend (Crow's Foot Notation)
 
