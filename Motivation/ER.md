@@ -2,7 +2,7 @@
 
 This diagram represents the core entities and their relationships within the Unified Health Record system.
 
-![Crow's Foot ER Diagram](Crows_ER.png)
+![Crow's Foot ER Diagram](Crows_ER.drawio)
 ```mermaid
 erDiagram
     %% Core Medical Records
