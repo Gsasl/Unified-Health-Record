@@ -1,7 +1,7 @@
 # 🏗️ Unified Health Manager: Database Architecture & ER Diagram
 
 ![Final ER Diagram](diagram_placeholder.png) 
-*(Note: Save your ER diagram image as `diagram_placeholder.png` in the same folder to display it here).*
+
 
 ---
 
