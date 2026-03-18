@@ -1,6 +1,6 @@
 # 🏗️ Unified Health Manager: Database Architecture & ER Diagram
 
-![Final ER Diagram](diagram_placeholder.png) 
+![Final ER Diagram](er_final.png) 
 
 
 ---
