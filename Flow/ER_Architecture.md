@@ -37,21 +37,61 @@ cat << 'EOF' > ER_Architecture.md
 
 ---
 
-## 2. Implementation Scope (1-Week MVP)
+# 🏥 Unified Health Manager: CDSS Architecture MVP
 
-To ensure a high-quality, fully functional demonstration within a constrained 1-week development cycle, the physical implementation focuses strictly on the **"Golden Thread"** of the architecture: **The Clinical Decision Support System (CDSS).**
+![Final ER Diagram](er_final.png)
+*(Conceptual Database Blueprint)*
 
-### 🟢 Actively Implemented (The Core Loop)
-* **Patient Portal (`user_dashboard.php`):** Full CRUD capability for creating a 1:1 lifetime master health record and maintaining a personal active medication log.
-* **Doctor Dashboard (`gp_dashboard.php`):** Interface to access patient records and view system-generated CDSS alerts.
-* **CDSS Automation Engine (SQL/PHP):** * **Conflict Detection:** Monitors the `prescribed in` bridge table to instantly trigger "Combo Danger" or "Blackbox" Medical Flags if dangerous drug interactions are detected.
-  * **Data Pipeline (`medex_scraper.py`):** An automated Python ETL script that pulls real-world pharmaceutical data, transforms it into Boolean flags, and seeds the MySQL `Medication` catalog.
+## 📖 Executive Summary
+The **Unified Health Manager** is a conceptual database architecture and web application designed to bridge the gap between patient history, active prescriptions, and pharmaceutical safety. 
 
-### 🟡 Mocked / Future Scope (To bypass UI bloat)
-While the conceptual database fully supports these entities, their frontend UIs are bypassed for the MVP demonstration to prioritize the CDSS logic:
-* **Doctor/Specialist/Pharma Auth:** User roles are handled via a simple session toggle rather than a complex registration system.
-* **Specialist Referrals:** The logic exists in the DB, but the UI messaging system between doctors is deferred.
-* **Inventory Logistics:** Live stock deduction and dropshipping logic are deferred to Phase 2.
-EOF
+Built as a rapid 1-week Minimum Viable Product (MVP), this phase prioritizes backend architecture over frontend UI. The primary objective is to demonstrate a robust **Clinical Decision Support System (CDSS)**—a relational database structure capable of tracking active patient medications and automatically detecting dangerous drug interactions (e.g., severe renal failure risks) using predefined clinical rules.
 
+---
+
+## ✨ Core Features (MVP Scope)
+* **Strict Patient Profiling (1:1):** Enforces a single, lifetime master health record per user to prevent duplicate or conflicting medical histories.
+* **Active Medication Tracking (M:N):** Utilizes junction tables to log exactly which commercial drug brands a patient is currently taking.
+* **Hierarchical Drug Catalog:** Separates generic chemical compositions from commercial brands, allowing the system to run safety checks on the chemical level.
+* **CDSS Conflict Engine:** A self-referencing bridge table that maps dangerous generic-to-generic interactions.
+* **Automated Data Pipeline:** Real-world pharmaceutical data and clinical warnings populated via a custom Python ETL scraper, rather than dummy text.
+
+---
+
+## 🛠️ Technology Stack
+* **Frontend:** HTML5, CSS3 (Vanilla)
+* **Backend:** PHP 8+ (PDO for secure database interactions)
+* **Database:** MySQL (Relational Architecture)
+* **Data Pipeline (ETL):** Python 3 (Requests, BeautifulSoup, Regex)
+
+---
+
+## 📂 Repository Structure
+
+| File | Type | Description |
+| :--- | :--- | :--- |
+| `master_setup.sql` | Database | The master SQL script to build the entire schema from scratch, including tables, relationships, and CDSS seed data. |
+| `user_dashboard.php` | Frontend/Backend | The Patient Portal. Simulates a logged-in patient, allowing them to initialize their master record and log active medications. |
+| `inventory.php` | Frontend/Backend | The Pharmacy View. A read-only dashboard executing `JOIN` queries to display commercial brand data alongside scraped clinical warnings. |
+| `medex_scraper.py` | ETL Script | Python script that scrapes a live pharmaceutical database, parses clinical warnings using Regex, and formats them into SQL. |
+| `er_final.png` | Asset | The Entity-Relationship diagram visualizing the architecture. |
+
+---
+
+## ⚙️ Installation & Setup
+To run this project locally or on a standard LAMP/XAMPP stack:
+
+**1. Database Initialization:**
+* Open phpMyAdmin or your MySQL client.
+* Create a new database (e.g., `bracculs_hrec`).
+* Import and run the `master_setup.sql` script to build the tables and inject the 16 base medications and conflict rules.
+
+**2. Application Configuration:**
+* Place `user_dashboard.php` and `inventory.php` in your server's public root directory (e.g., `htdocs` or `public_html`).
+* Update the database credentials at the top of both PHP files to match your local/server environment:
+  ```php
+  $host = 'localhost'; 
+  $db   = 'bracculs_hrec'; 
+  $user = 'your_db_username'; 
+  $pass = 'your_db_password';
 echo "✅ Updated ER_Architecture.md with Implementation Scope!"
