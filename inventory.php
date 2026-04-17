@@ -1,13 +1,11 @@
 <?php
 // --- DATABASE CONFIGURATION ---
-// Replace these with the exact credentials from your Freehosting control panel!
 $host = 'localhost'; 
-$db   = 'bracculs_hrec'; // This matches the database name from your screenshot
-$user = 'bracculs_hrec'; // Enter the username you created
-$pass = 'FXcLBvkG7ADUYkJCyPdp';          // Enter the password you created
+$db   = 'bracculs_hrec'; 
+$user = 'bracculs_hrec'; 
+$pass = 'FXcLBvkG7ADUYkJCyPdp';          
 
 try {
-    // 1. Establish the PDO Connection
     $dsn = "mysql:host=$host;dbname=$db;charset=utf8mb4";
     $pdo = new PDO($dsn, $user, $pass, [
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
@@ -15,15 +13,14 @@ try {
         PDO::ATTR_EMULATE_PREPARES   => false,
     ]);
 
-    // 2. Query the Data
-    // We use a JOIN to get the Brand info and its associated Generic warnings in one go
+    // Query updated to match the corrected schema
     $sql = "
         SELECT 
             b.BrandName, 
             g.GenericName, 
             b.Manufacturer, 
             b.UnitPrice, 
-            g.Warnings 
+            g.StopIfCondition AS Warnings 
         FROM Brands b
         JOIN Generics g ON b.GenericID = g.GenericID
         ORDER BY g.GenericName ASC, b.BrandName ASC
@@ -33,7 +30,6 @@ try {
     $medications = $stmt->fetchAll();
 
 } catch (PDOException $e) {
-    // If connection fails, stop the script and show the error
     die("<h3 style='color:red;'>Database Connection Failed: " . $e->getMessage() . "</h3><p>Check your \$user, \$pass, and \$db variables.</p>");
 }
 ?>
